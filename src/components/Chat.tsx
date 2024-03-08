@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const Chat = () => {
   const [userList, setUserList] = useState<string[]>([]);
+  const [message, setMessage] = useState<string>('');
   //   const [username, setUsername] = useState<string>('');
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -36,6 +37,15 @@ const Chat = () => {
     };
   }, []);
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Code to send message...
+  };
+
   //   const location = useLocation();
   console.log('Current URL from chat comp:', location.pathname);
   return (
@@ -48,6 +58,15 @@ const Chat = () => {
           {user}
         </p>
       ))}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          id="messageInput"
+          value={message}
+          onChange={handleInputChange}
+        />
+        <button id="messageSubmitBtn">Submit</button>
+      </form>
     </div>
   );
 };
