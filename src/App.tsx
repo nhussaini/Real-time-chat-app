@@ -8,6 +8,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Join from './components/Join';
+import Chat from './components/Chat';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/join" replace />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </Router>
     </>
