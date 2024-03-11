@@ -9,7 +9,7 @@ const Chat = () => {
   const username = queryParams.get('username');
   const SERVER_ADDRESS = `ws://serve.skillreactor.io:8080/nasrullah?username=${username}`;
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [receivedMessages, setRecievedMessages] = useState<
+  const [receivedMessages, setReceivedMessages] = useState<
     { data: string; time: string }[]
   >([]);
 
@@ -28,10 +28,9 @@ const Chat = () => {
           user.toLocaleLowerCase()
         );
         setUserList(userList);
-      } else if (message.type === 'broadcast') {
       } else if (message.type === 'message') {
         const newMessage = { data: message.data, time: message.time };
-        setRecievedMessages((prevMessages) => [...prevMessages, newMessage]);
+        setReceivedMessages((prevMessages) => [...prevMessages, newMessage]);
       }
     };
 
@@ -65,8 +64,8 @@ const Chat = () => {
       <h1 id="username">{username}</h1>
       <h1>Connected Users</h1>
 
-      {userList.map((user, index) => (
-        <p id={`user_${user}`} key={index}>
+      {userList.map((user) => (
+        <p id={`user_${user}`} key={user}>
           {user}
         </p>
       ))}

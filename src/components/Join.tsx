@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Join = () => {
   const [userName, setUserName] = useState<string>('');
   const navigate = useNavigate();
-  //   const location = useLocation();
 
   //handleInputChange
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
