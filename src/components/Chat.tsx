@@ -14,35 +14,44 @@ const Chat = () => {
   >([]);
 
   useEffect(() => {
-    const socket = new WebSocket(SERVER_ADDRESS);
+    const connectWebSocket = () => {
+      const socket = new WebSocket(SERVER_ADDRESS);
 
-    socket.onopen = () => {
-      console.log('Connected to WebSocket server!');
-      setWs(socket);
-    };
+      socket.onopen = () => {
+        console.log('Connected to WebSocket server!');
+        setWs(socket);
+      };
 
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (message.type === 'users') {
-        const userList = message.data.map((user: string) =>
-          user.toLocaleLowerCase()
-        );
-        setUserList(userList);
-      } else if (message.type === 'message') {
-        const newMessage = { data: message.data, time: message.time };
-        setReceivedMessages((prevMessages) => [...prevMessages, newMessage]);
-      }
-    };
+      socket.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data);
+          if (message.type === 'users') {
+            const userList = message.data.map((user: string) =>
+              user.toLocaleLowerCase()
+            );
+            setUserList(userList);
+          } else if (message.type === 'message') {
+            const newMessage = { data: message.data, time: message.time };
+            setReceivedMessages((prevMessages) => [
+              ...prevMessages,
+              newMessage,
+            ]);
+          }
+        } catch (error) {
+          console.error('Error parsing message:', error);
+        }
+      };
 
-    // Clean up WebSocket connection on unmount
-    return () => {
-      if (
-        socket.readyState === WebSocket.OPEN ||
-        socket.readyState === WebSocket.CONNECTING
-      ) {
+      socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      return () => {
         socket.close();
-      }
+      };
     };
+
+    connectWebSocket();
   }, [SERVER_ADDRESS]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
