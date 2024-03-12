@@ -14,44 +14,35 @@ const Chat = () => {
   >([]);
 
   useEffect(() => {
-    const connectWebSocket = () => {
-      const socket = new WebSocket(SERVER_ADDRESS);
+    const socket = new WebSocket(SERVER_ADDRESS);
 
-      socket.onopen = () => {
-        console.log('Connected to WebSocket server!');
-        setWs(socket);
-      };
-
-      socket.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
-          if (message.type === 'users') {
-            const userList = message.data.map((user: string) =>
-              user.toLocaleLowerCase()
-            );
-            setUserList(userList);
-          } else if (message.type === 'message') {
-            const newMessage = { data: message.data, time: message.time };
-            setReceivedMessages((prevMessages) => [
-              ...prevMessages,
-              newMessage,
-            ]);
-          }
-        } catch (error) {
-          console.error('Error parsing message:', error);
-        }
-      };
-
-      socket.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-
-      return () => {
-        socket.close();
-      };
+    socket.onopen = () => {
+      console.log('Connected to WebSocket server!');
+      setWs(socket);
     };
 
-    connectWebSocket();
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === 'users') {
+        const userList = message.data.map((user: string) =>
+          user.toLocaleLowerCase()
+        );
+        setUserList(userList);
+      } else if (message.type === 'message') {
+        const newMessage = { data: message.data, time: message.time };
+        setReceivedMessages((prevMessages) => [...prevMessages, newMessage]);
+      }
+    };
+
+    // Clean up WebSocket connection on unmount
+    return () => {
+      if (
+        socket.readyState === WebSocket.OPEN ||
+        socket.readyState === WebSocket.CONNECTING
+      ) {
+        socket.close();
+      }
+    };
   }, [SERVER_ADDRESS]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
