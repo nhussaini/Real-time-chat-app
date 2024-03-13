@@ -33,7 +33,7 @@
   /* height: 100vh; Set height to full viewport height */
 }
 .main-messages {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
 }
@@ -48,9 +48,18 @@
 #messages {
   padding: 0 5px;
 }
+.message {
+  background-color: #dcf8c6; /* Light green background color */
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px; /* Padding around the message */
+  margin-left: 20px; /* Space between time and message */
+  display: inline-block; /* Display message as inline block */
+  max-width: 70%; /* Limit maximum width of message */
+}
 .time {
   font-size: 12px;
   margin-right: 10px;
+  color: #999; /* Gray color for time */
 }
 
 @keyframes App-logo-spin {
