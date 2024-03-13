@@ -2,16 +2,14 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  collectCoverageFrom: [
-    "**/*.{js,jsx,ts,tsx}"
-  ],
+  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
   coveragePathIgnorePatterns: [
-    "node_modules/",
-    "vendor/",
-    "skillreactor/",
-    ".build/",
-    "coverage/",
-    "jest.config.js",
-    "src/reportWebVitals.ts"
-  ]
+    'node_modules/',
+    'vendor/',
+    'skillreactor/',
+    '.build/',
+    'coverage/',
+    'jest.config.js',
+    'src/reportWebVitals.ts',
+  ],
 };
