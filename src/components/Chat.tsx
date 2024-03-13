@@ -60,7 +60,7 @@ const Chat = () => {
   };
 
   return (
-    <div>
+    <div className="chat">
       <h1 id="username">{username}</h1>
       <h1>Connected Users</h1>
 
@@ -78,11 +78,11 @@ const Chat = () => {
         />
         <button id="messageSubmitBtn">Submit</button>
       </form>
-      <div>
+      <div className="main-messages">
         <ul id="messages">
           {receivedMessages?.map((msg, index) => {
             return (
-              <li key={index}>
+              <li key={index} className="messages-time">
                 <span className="time">{msg.time}</span>
                 <span className="message">{msg.data}</span>
               </li>
